@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ffeaa7,#fab1a0);
+font-family:sans-serif;
+overflow:hidden;
+}
+.card{
+background:pink;
+padding:30px;
+border-radius:20px;
+text-align:center;
+width:80%;
+max-width:400px;
+position:relative;
+z-index:2;
+}
+button{
+padding:12px 25px;
+border:none;
+border-radius:20px;
+font-size:16px;
+margin:10px;
+cursor:pointer;
+}
+.yes{background:#ff4757;color:white;}
+.no{background:#ddd;position:absolute;}
+.heart{
+position:absolute;
+top:-10px;
+animation:fall linear infinite;
+}
+@keyframes fall{
+to{transform:translateY(100vh);}
+}
+#typing-area {
+    white-space: pre-wrap; 
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+</style>
+</head>
+<body>
+
+<audio id="myAudio" loop>
+<source src="Varsha Thapa - Maaya (Official Lyrical Video)(MP3_160K).mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+<div id="stage1">
+<h3>Click anywhere to start your surprise Somi🤍</h3>
+<p>Hope you will like it !</p>
+</div>
+
+<div id="stage2" style="display:none;">
+<h2>Will you be my Valentine? 💖</h2>
+<button class="yes" onclick="yesClick()">Yes 💕</button>
+<button class="no" id="noBtn" onclick="moveNo()">No 🙈</button>
+</div>
+
+<div id="stage3" style="display:none;">
+    <div id="typing-area"></div>
+    <img id="cuteGif" src="https://media.tenor.com/Q0Z9ZfF5zYcAAAAi/cute-love.gif" width="150" style="display:none; margin: 0 auto;">
+</div>
+</div>
+
+<script>
+let stage=1;
+const audio = document.getElementById("myAudio");
+
+document.body.onclick=function(){
+if(stage==1){
+document.getElementById("stage1").style.display="none";
+document.getElementById("stage2").style.display="block";
+audio.play(); 
+heartRain(); 
+stage=2;
+}
+}
+
+let noCount=0;
+function moveNo(){
+if(noCount<6){
+let btn=document.getElementById("noBtn");
+btn.style.left=Math.random()*200+"px";
+btn.style.top=Math.random()*150+"px";
+noCount++;
+}
+}
+
+function yesClick(){
+document.getElementById("stage2").style.display="none";
+document.getElementById("stage3").style.display="block";
+startTyping();
+}
+
+const fullText = "I knew you'd say yes 🤍\n\nभावनाले लेखेको तिमी एक सुन्दर कविता 🤍\nम त खाली एक पाना बनेको तिमीले भरिजान ।\n\nI love you dherai dherai ❤️।\n\n Always there for you to cheer you, to push you up and to love you😚";
+
+let charIndex = 0;
+function startTyping(){
+    if(charIndex < fullText.length){
+        document.getElementById("typing-area").innerHTML += fullText.charAt(charIndex);
+        charIndex++;
+        setTimeout(startTyping, 70); 
+    } else {
+        // FIXED: This line now correctly triggers the GIF to show up!
+        setTimeout(() => {
+            document.getElementById("cuteGif").style.display = "block";
+        }, 500); 
+    }
+}
+
+function heartRain(){
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(Math.random()*3+2)+"s";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),5000);
+},300);
+}
+</script>
+</body>
+</html>
